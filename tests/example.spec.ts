@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-import * as path from 'path'; // Importez le module path pour gérer les chemins de fichiers
 
 test('Mon test Playwright', async ({ page }) => {
   // Accédez à la page de paramètres du compte
@@ -19,17 +18,14 @@ test('Mon test Playwright', async ({ page }) => {
 
   await page.getByTestId('account-edit-field-avatar').getByRole('button').nth(1).click();
 
-
-
   await page.pause();
+  
   // Cliquez sur le champ de téléchargement de fichier en utilisant l'attribut data-testid
   let fileInputLocator = page.locator('[data-testid="button.sc-gvZAcH.cLLWUP"]');
-  //await fileInputLocator.click({ timeout: 10000 }); // Attendre que l'élément soit visible
 
-  // Définissez le chemin local de la photo que vous souhaitez télécharge
+  // Définissez le chemin local de la photo que vous souhaitez télécharger
   const filePath = '/Users/nina/playwright-example/tests/test-files/tassadit.png';
   await page.setInputFiles('[data-testid="account-edit-field-avatar"] input[type="file"]', filePath);
-      
 
   await page.pause();
 
@@ -49,20 +45,18 @@ test('Mon test Playwright', async ({ page }) => {
 
   await page.pause();
   await page.getByRole('button', { name: 'Remove' }).click();
-    // Cliquez sur le champ de téléchargement de fichier en utilisant l'attribut data-testid
+  
+  // Réaffectez fileInputLocator pour le champ de téléchargement du CV
   fileInputLocator = page.locator('[data-testid="account-edit-field-resume"]');
-    //await fileInputLocator.click({ timeout: 10000 }); // Attendre que l'élément soit visible
-      
-      // Définissez le chemin local du fichier que vous souhaitez télécharger
-  const cvfilePath = '/Users/nina/playwright-example/tests/test-files/CV.pdf';
-      
-      // Utilisez setInputFiles pour télécharger le fichier depuis votre système de fichiers local
-  await fileInputLocator.setInputFiles(cvfilePath);
-      
-      // Attendez que le bouton "Soumettre" (Assurez-vous que l'élément avec le data-testid "account-edit-button-submit" existe) soit visible et cliquez dessus
+
+  // Définissez le chemin local du fichier CV que vous souhaitez télécharger
+  const cvFilePath = '/Users/nina/playwright-example/tests/test-files/CV.pdf';
+
+  // Utilisez setInputFiles pour télécharger le fichier depuis votre système de fichiers local
+  await fileInputLocator.setInputFiles(cvFilePath);
+
+  // Attendez que le bouton "Soumettre" soit visible
   await page.waitForSelector('[data-testid="account-edit-button-submit"]');
-
-
 
   await page.pause();
 
@@ -74,10 +68,10 @@ test('Mon test Playwright', async ({ page }) => {
   await page.getByTestId('account-edit-field-media[linkedin]').click();
   await page.getByTestId('account-edit-field-media[linkedin]').fill('https://www.linkedin.com/in/tassadit-abrous-155726239/');
 
-
+  
 
   await page.getByTestId('account-edit-button-submit').click();
-  
+
   await page.pause();
   await page.getByTestId('header-user-links-toggle').click();
   await page.getByRole('menuitem', { name: ' Déconnexion' }).click();
